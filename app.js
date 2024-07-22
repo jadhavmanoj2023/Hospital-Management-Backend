@@ -17,6 +17,9 @@ config({ path: "./config/config.env" });
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT');
+
   next();
 });
 
