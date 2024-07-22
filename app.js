@@ -14,6 +14,15 @@ const app = express();
 
 config({ path: "./config/config.env" });
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
+
+
+
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
@@ -23,6 +32,8 @@ app.use(
 
   })
 );
+
+app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json());
@@ -34,6 +45,8 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+
 
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
