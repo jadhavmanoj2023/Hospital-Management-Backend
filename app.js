@@ -14,28 +14,15 @@ const app = express();
 
 config({ path: "./config/config.env" });
 
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', "https://hospital-mangement-frontend.vercel.app");
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT');
-
-//   next();
-// });
-
-
-
-
-
 const allowedOrigins = [
   "https://hospital-mangement-frontend.vercel.app",
-  process.env.DASHBOARD_URL
+  process.env.DASHBOARD_URL,
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
@@ -58,14 +45,11 @@ app.use(
   })
 );
 
-
-
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
 
 dbConnection();
-
 app.use(errorMiddleware);
 
 export default app;
