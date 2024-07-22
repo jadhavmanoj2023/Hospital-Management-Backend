@@ -14,29 +14,38 @@ const app = express();
 
 config({ path: "./config/config.env" });
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', "https://hospital-mangement-frontend.vercel.app");
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT');
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', "https://hospital-mangement-frontend.vercel.app");
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT');
 
-  next();
-});
+//   next();
+// });
 
 
 
+
+
+const allowedOrigins = [
+  "https://hospital-mangement-frontend.vercel.app",
+  process.env.DASHBOARD_URL
+];
 
 app.use(
   cors({
-    origin: ["https://hospital-mangement-frontend.vercel.app", process.env.DASHBOARD_URL],
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["POST", "GET", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-
   })
 );
-
-app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json());
