@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+    origin: ["https://hospital-mangement-frontend.vercel.app", process.env.DASHBOARD_URL],
     methods: ["POST", "GET", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
