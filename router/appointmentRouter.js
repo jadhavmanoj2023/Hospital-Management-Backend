@@ -11,7 +11,7 @@ import {
 } from "../middlewares/auth.js";
 
 const router = express.Router();
-router.post("/post", isPatientAuthenticated, postAppointment);
+router.post("/post", postAppointment);
 router.get("/getall", isAdminAuthenticated, getAllAppointments);
 router.put("/update/:id", isAdminAuthenticated, updatAppointmentStatus);
 router.delete("/delete/:id", isAdminAuthenticated, deleteAppointment);
