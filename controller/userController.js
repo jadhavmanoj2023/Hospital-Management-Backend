@@ -34,7 +34,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("User already registered!", 400));
   }
 
-  await User.create({
+  user = await User.create({
     firstName,
     lastName,
     email,
@@ -66,7 +66,7 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   }
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    return next(new ErrorHandler("Invalid Password or Email! USerLedu", 400));
+    return next(new ErrorHandler("Invalid Password or Email!", 400));
   }
   const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {

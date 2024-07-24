@@ -11,7 +11,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     email,
     phone,
     aadhar,
-    dateOfBirth,
+    dob,
     gender,
     appointment_date,
     department,
@@ -27,7 +27,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     !email ||
     !phone ||
     !aadhar ||
-    !dateOfBirth ||
+    !dob ||
     !gender ||
     !appointment_date ||
     !department ||
@@ -64,7 +64,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     email,
     phone,
     aadhar,
-    dateOfBirth,
+    dob,
     gender,
     appointment_date,
     department,
