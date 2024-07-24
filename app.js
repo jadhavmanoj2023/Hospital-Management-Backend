@@ -16,7 +16,7 @@ config({ path: "./config/config.env" });
 
 
 
-const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL];
+const allowedOrigins = ['https://hospital-management-dashboard-steel.vercel.app', 'https://hospital-mangement-frontend.vercel.app'];
 
 app.use(cors({
   origin: (origin, callback) => {
