@@ -13,7 +13,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     password,
     gender,
     dateOfBirth,
-    aadhar
+    aadhar,
   } = req.body;
   console.log(req.body);
   if (
@@ -24,7 +24,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     !password ||
     !gender ||
     !dateOfBirth ||
-    !aadhar 
+    !aadhar
   ) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
@@ -43,7 +43,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     gender,
     dateOfBirth,
     aadhar,
-    role:"Patient",
+    role: "Patient",
   });
 
   generateToken(user, "User Registered", 200, res);
@@ -79,8 +79,16 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone, password, gender, dateOfBirth, aadhar } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    dateOfBirth,
+    aadhar,
+  } = req.body;
   if (
     !firstName ||
     !lastName ||
@@ -138,9 +146,10 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
 export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
   res
     .status(200)
-    .cookie("adminToken", "", {
+    .clearCookie("adminToken", "", {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "None", // Prevents CSRF attacks
     })
     .json({
       success: true,
@@ -151,9 +160,10 @@ export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
 export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
   res
     .status(200)
-    .cookie("patientToken", "", {
+    .clearCookie("patientToken", "", {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "None", // Prevents CSRF attacks
     })
     .json({
       success: true,
